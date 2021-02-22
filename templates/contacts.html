@@ -1,54 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-    <title>Студия йоги Ом</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-	<meta name="description" content="Студия йоги Ом">
-    <link rel="stylesheet" id="xtheme-layout-css" href="http://ips2021.org/css1/layout.css?v=2" type="text/css" media="all">
-    <link rel="shortcut icon" href="favicon.ico">
-  </head>
-  <body>
-
-  <header class="header">
-    <div class="header-container centering">
-        <div class="header-logo">
-            <a href="/" title="Back to Homepage">
-                <img src="http://ips2021.org/css1/logo.png" alt="Yoga">
-            </a>
-        </div>
-
-        <a class="hamburger" href="#" title="Menu">
-            <span class="line-1"></span>
-            <span class="line-2"></span>
-            <span class="line-3"></span>
-        </a>
-    </div>
-
-    <nav id="main-nav" class="main-nav centering">
-	  <ul id="menu-main-menu" class="menu">
-	    <li class="menu-item"><a href="/">Предстоящие события</a></li>
-        <li class="menu-item"><a href="/coachers/">Тренеры</a></li>
-        <li class="menu-item"><a href="/contacts/">Контакты</a></li>
-      </ul>
-    </nav>
-
-  </header>
-  <div class="page-header">
-    <div class="centering">
-      <div class="page-title">
-        <h1>Студия йоги Ом - классы и ретриты в феврале</h1>
-        <p class="breadcrumbs">studio: {{studio}}</p>
-      </div>
-    </div>
-  </div>
-
+{% extends "base.html" %}
+{% block metatitle %}
+Студия йоги Ом - наши тренеры
+{% endblock %}
+{% block title %}
+Студия йоги Ом - наши тренеры
+{% endblock %}
+{% block breadcrumb %}
+<a href="/">Главная</a> >> Контакты
+{% endblock %}
+{% block content %}
 
   <section class="section featured-section dark">
     <div class="centering">
@@ -85,16 +45,4 @@
   </section>
 
 
-  <footer id="site-footer" class="footer" role="contentinfo" aria-label="Main Footer">
-    <div class="footer-content centering">
-      <div class="grid">
-        <div class="grid-xs-12 grid-s-6 grid-md-6 widget">
-          <img class="footer-logo" src="http://ips2021.org/css1/logo_white.png">
-          <p>Ом</p>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-</body>
-</html>
+{% endblock %}
