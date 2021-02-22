@@ -1,3 +1,6 @@
+import os
+
+
 class Application:
     def parse_input_data(self, data: str):
         result = {}
@@ -33,15 +36,43 @@ class Application:
     def __call__(self, env, start_response):
         path = env['PATH_INFO']
 
-        if path[-1] != '/':
-            path = f'{path}/'
-
         method = env['REQUEST_METHOD']
         data = self.get_wsgi_input_data(env)
         data = self.parse_wsgi_input_data(data)
 
         query_string = env['QUERY_STRING']
         request_params = self.parse_input_data(query_string)
+
+        if len(path.split('/')) == 3 and path.split('/')[1] == 'static':
+            dir = os.getcwd()
+            # dir = os.path.split(dir)[0]
+            if path[0] == '/':
+                path = path[1:]
+            static_file = os.path.join(dir, path)
+            if os.path.isfile(static_file):
+                print('yes')
+                with open(static_file, 'r', encoding="utf-8") as f:
+                    file_content = f.read()
+
+                extension = path.split('.')[-1]
+                if extension == 'css':
+                    start_response('200 OK', [('Content-Type', 'text/css')])
+                    return [file_content.encode('utf-8')]
+                elif extension == 'jpg':
+                    start_response('200 OK', [('Content-Type', 'image/jpeg')])
+                    return [file_content.encode('utf-8')]
+                elif extension == 'js':
+                    start_response('200 OK', [('Content-Type', 'application/javascript')])
+                    return [file_content.encode('utf-8')]
+                else:
+                    start_response('404 NOT FOUND', [('Content-Type', 'text/html')])
+                    return [b"Not Found"]
+            else:
+                start_response('404 NOT FOUND', [('Content-Type', 'text/html')])
+                return [b"Not Found"]
+
+        if path[-1] != '/':
+            path = f'{path}/'
 
         if path in self.urlpatterns:
             view = self.urlpatterns[path]
