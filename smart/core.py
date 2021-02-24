@@ -2,6 +2,13 @@ import os
 
 
 class Application:
+
+    def add_route(self, url):
+        def inner(view):
+            self.urlpatterns[url] = view
+
+        return inner
+
     def parse_input_data(self, data: str):
         result = {}
         if data:

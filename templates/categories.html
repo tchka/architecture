@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block metatitle %}
+Студия йоги Ом - направления занятий
+{% endblock %}
+{% block title %}
+Студия йоги Ом - направления занятий
+{% endblock %}
+{% block breadcrumb %}
+<a href="/">Главная</a> >> Направления занятий
+{% endblock %}
+{% block content %}
+
+  <section class="section featured-section dark">
+    <div class="centering">
+      <div class="grid stretch-grid reverse-grid">
+
+        {% for item in object_list %}
+        <div class="grid-xs-12 grid-s-6 featured-meta">
+          <div class="intro-text">
+            <h2 class="intro-title"> {{item.name}} </h2>
+            <span class="sub-text">Количество уроков: {{item.course_count()}}</span>
+            <a href="#" title="Read More" class="button">Read More</a>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

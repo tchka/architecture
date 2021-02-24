@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block metatitle %}
+Студия йоги Ом - добавить урок
+{% endblock %}
+{% block title %}
+Студия йоги Ом - добавить урок
+{% endblock %}
+{% block breadcrumb %}
+<a href="/">Главная</a> >> Создать новый урок
+{% endblock %}
+{% block content %}
+
+  <section class="section featured-section dark">
+    <div class="centering">
+      <div class="grid stretch-grid reverse-grid">
+        <div class="grid-xs-12 grid-s-6 featured-meta">
+          <div class="intro-text">
+            <span class="sub-text">Создание урока</span>
+            <h2 class="intro-title">Новый урок</h2>
+            <div class="intro-content">
+              <h3 style="color: #fff;">Форма</h3>
+              <form method="post">
+    			<div class="form-item">
+                  <label class="form-label">Название</label>
+                  <input type="text" name="name" class="form-input">
+                </div>
+                <div class="form-item">
+                  <label class="form-label">Категория</label>
+                  <select size="3" name="category_id">
+                    {% for item in categories %}
+                    <option value="{{item.id}}">{{item.name}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <input type="submit" value="Сохранить" class="button">
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="grid-xs-12 grid-s-6">
+          <div class="featured-image section-img with-bg" style="background-image: url(http://ips2021.org/css1/img3.jpg)"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
