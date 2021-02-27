@@ -24,14 +24,6 @@
                   <label class="form-label">Название</label>
                   <input type="text" name="name" class="form-input">
                 </div>
-                <div class="form-item">
-                  <label class="form-label">Категория</label>
-                  <select size="3" name="category_id">
-                    {% for item in categories %}
-                    <option value="{{item.id}}">{{item.name}}</option>
-                    {% endfor %}
-                  </select>
-                </div>
                 <input type="submit" value="Сохранить" class="button">
               </form>
             </div>

@@ -14,16 +14,17 @@
     <div class="centering">
       <div class="grid stretch-grid reverse-grid">
 
-        {% for item in object_list %}
+        {% for item in objects_list %}
         <div class="grid-xs-12 grid-s-6 featured-meta">
           <div class="intro-text">
             <h2 class="intro-title"> {{item.name}} </h2>
-            <span class="sub-text"><a href="/copy-course/?name={{item.name}}">скопировать</a></span>
-            <a href="#" title="Read More" class="button">Read More</a>
+            <span class="sub-text"><a href="/copy-course/?name={{item.name}}" class="button">скопировать</a></span>
           </div>
         </div>
         {% endfor %}
-
+        <div class="centering button-wrapper">
+          <a href="/create-course/" class="button">Новый урок</a>
+        </div>
       </div>
     </div>
   </section>
