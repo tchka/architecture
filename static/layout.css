@@ -24,3 +24,7 @@ http://flickity.metafizzy.co
   background: #ebebeb;   
   border: none;
 }
+.button-wrapper {
+  margin-top: 40px;
+  text-align: center;
+}
