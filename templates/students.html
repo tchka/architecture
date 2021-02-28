@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block metatitle %}
+Студия йоги Ом - участники
+{% endblock %}
+{% block title %}
+Студия йоги Ом - участники
+{% endblock %}
+{% block breadcrumb %}
+<a href="/">Главная</a> >> Участники
+{% endblock %}
+{% block content %}
+
+  <section class="section featured-section dark">
+    <div class="centering">
+      <div class="grid stretch-grid reverse-grid">
+
+        {% for item in objects_list %}
+        <div class="grid-xs-12 grid-s-6 featured-meta">
+          <div class="intro-text">
+            <h2 class="intro-title"> {{item.name}} </h2>
+            <span class="sub-text">
+              {% for course in item.courses %}
+                {{course.name}}<br>
+              {% endfor %}
+            </span>
+          </div>
+        </div>
+        {% endfor %}
+        <div class="centering button-wrapper">
+          <a href="/create-student/" class="button">Создать участника</a>
+        </div>
+        <div class="centering button-wrapper">
+          <a href="/add-student/" class="button">Записать участника на курс</a>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
