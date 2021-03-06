@@ -3,13 +3,17 @@ import datetime
 from wsgiref.simple_server import make_server
 from smart import render, Application, DebugApplication, FakeApplication
 from models import YogaSite, BaseSerializer, EmailNotifier, SmsNotifier
-from smart.wavycbv import ListView, CreateView
+from smart.smartcbv import ListView, CreateView
 from logging_mod import Logger, debug
+from smartorm import UnitOfWork
+from mappers import MapperRegistry
 
 site = YogaSite()
 logger = Logger('main')
 email_notifier = EmailNotifier()
 sms_notifier = SmsNotifier()
+UnitOfWork.new_current()
+UnitOfWork.get_current().set_mapper_registry(MapperRegistry)
 
 
 def secret_controller(request):
@@ -22,9 +26,12 @@ front_controllers = [
 
 
 class StudentListView(ListView):
-    queryset = site.students
+    # queryset = site.students
     template_name = 'students.html'
 
+    def get_queryset(self):
+        mapper = MapperRegistry.get_current_mapper('student')
+        return mapper.all()
 
 class StudentCreateView(CreateView):
     template_name = 'create_student.html'
@@ -34,6 +41,8 @@ class StudentCreateView(CreateView):
         name = decode_value(name)
         new_obj = site.create_user('student', name)
         site.students.append(new_obj)
+        new_obj.mark_new()
+        UnitOfWork.get_current().commit()
 
 
 class AddStudentByCourseCreateView(CreateView):
@@ -54,10 +63,30 @@ class AddStudentByCourseCreateView(CreateView):
         student = site.get_student(student_name)
         course.add_student(student)
 
+#
+# class CategoryListView(ListView):
+#     # queryset = site.students
+#     template_name = 'categories.html'
+#
+#     def get_queryset(self):
+#         mapper = MapperRegistry.get_current_mapper('category')
+#         return mapper.all()
+#
+# class CategoryCreateView(CreateView):
+#     template_name = 'create_category.html'
+#
+#     def create_obj(self, data: dict):
+#         name = data['name']
+#         name = decode_value(name)
+#         new_obj = site.create_user('category', name)
+#         site.categories.append(new_obj)
+#         new_obj.mark_new()
+#         UnitOfWork.get_current().commit()
+
 
 urlpatterns = {
     # '/create-category/': CategoryCreateView(),
-    # '/category-list/': CategoryListView(),
+    # '/categories/': CategoryListView(),
     '/students/': StudentListView(),
     '/create-student/': StudentCreateView(),
     '/add-student/': AddStudentByCourseCreateView(),

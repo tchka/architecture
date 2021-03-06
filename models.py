@@ -1,6 +1,7 @@
 from reusepatterns.prototypes import PrototypeMixin
 from reusepatterns.observer import Subject, Observer
 import jsonpickle
+from smartorm import DomainObject
 
 
 # пользователь
@@ -15,7 +16,7 @@ class Coacher(User):
 
 
 # участник
-class Student(User):
+class Student(User, DomainObject):
 
     def __init__(self, name):
         self.courses = []
@@ -35,7 +36,7 @@ class UserFactory:
 
 
 # Категория занятия
-class Category:
+class Category():
     # реестр?
     auto_id = 0
 
