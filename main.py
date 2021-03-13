@@ -1,6 +1,5 @@
 import quopri
 import datetime
-from wsgiref.simple_server import make_server
 from smart import render, Application, DebugApplication, FakeApplication
 from models import YogaSite, BaseSerializer, EmailNotifier, SmsNotifier
 from smart.smartcbv import ListView, CreateView
@@ -229,6 +228,3 @@ def decode_value(val):
     return val_decode_str.decode('UTF-8')
 
 
-with make_server('', 8000, application) as httpd:
-    print("Serving on port 8000...")
-    httpd.serve_forever()

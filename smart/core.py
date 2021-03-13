@@ -1,5 +1,4 @@
 import os
-from wsgiref.util import setup_testing_defaults
 
 
 class Application:
@@ -42,7 +41,7 @@ class Application:
         self.front_controllers = front_controllers
 
     def __call__(self, env, start_response):
-        setup_testing_defaults(env)
+
         path = env['PATH_INFO']
 
         method = env['REQUEST_METHOD']
