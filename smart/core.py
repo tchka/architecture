@@ -1,4 +1,5 @@
 import os
+import re
 
 
 class Application:
@@ -32,6 +33,11 @@ class Application:
         data = env['wsgi.input'].read(content_length) if content_length > 0 else b''
         return data
 
+    def cleanhtml(raw_html):
+        cleanr = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+        cleantext = re.sub(cleanr, '', raw_html)
+        return cleantext
+
     def __init__(self, urlpatterns, front_controllers):
         """
         :param urlpatterns: dict url: view
@@ -46,6 +52,7 @@ class Application:
 
         method = env['REQUEST_METHOD']
         data = self.get_wsgi_input_data(env)
+        data = self.cleanhtml(data)
         data = self.parse_wsgi_input_data(data)
 
         query_string = env['QUERY_STRING']
