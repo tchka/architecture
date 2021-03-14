@@ -36,21 +36,14 @@ class UserFactory:
 
 
 # Категория занятия
-class Category():
-    # реестр?
-    auto_id = 0
+class Category(DomainObject):
 
-    def __init__(self, name, category):
-        self.id = Category.auto_id
-        Category.auto_id += 1
+    def __init__(self, name):
         self.name = name
-        self.category = category
         self.courses = []
 
     def course_count(self):
         result = len(self.courses)
-        if self.category:
-            result += self.category.course_count()
         return result
 
 
