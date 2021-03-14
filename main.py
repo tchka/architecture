@@ -62,30 +62,30 @@ class AddStudentByCourseCreateView(CreateView):
         student = site.get_student(student_name)
         course.add_student(student)
 
-#
-# class CategoryListView(ListView):
-#     # queryset = site.students
-#     template_name = 'categories.html'
-#
-#     def get_queryset(self):
-#         mapper = MapperRegistry.get_current_mapper('category')
-#         return mapper.all()
-#
-# class CategoryCreateView(CreateView):
-#     template_name = 'create_category.html'
-#
-#     def create_obj(self, data: dict):
-#         name = data['name']
-#         name = decode_value(name)
-#         new_obj = site.create_user('category', name)
-#         site.categories.append(new_obj)
-#         new_obj.mark_new()
-#         UnitOfWork.get_current().commit()
+
+class CategoryListView(ListView):
+    # queryset = site.students
+    template_name = 'categories.html'
+
+    def get_queryset(self):
+        mapper = MapperRegistry.get_current_mapper('category')
+        return mapper.all()
+
+class CategoryCreateView(CreateView):
+    template_name = 'create_category.html'
+
+    def create_obj(self, data: dict):
+        name = data['name']
+        name = decode_value(name)
+        new_obj = site.create_user('category', name)
+        site.categories.append(new_obj)
+        new_obj.mark_new()
+        UnitOfWork.get_current().commit()
 
 
 urlpatterns = {
-    # '/create-category/': CategoryCreateView(),
-    # '/categories/': CategoryListView(),
+    '/create-category/': CategoryCreateView(),
+    '/categories/': CategoryListView(),
     '/students/': StudentListView(),
     '/create-student/': StudentCreateView(),
     '/add-student/': AddStudentByCourseCreateView(),
@@ -148,34 +148,34 @@ def copy_course(request):
     return '200 OK', render('courses.html', objects_list=site.courses)
 
 
-@application.add_route('/categories/')
-@debug
-def categories_view(request):
-    logger.log('Список категорий')
-    return '200 OK', render('categories.html', objects_list=site.categories)
-
-
-@application.add_route('/create-category/')
-@debug
-def create_category(request):
-    if request['method'] == 'POST':
-        data = request['data']
-        name = data['name']
-
-        name = decode_value(name)
-        category_id = data.get('category_id')
-
-        category = None
-        if category_id:
-            category = site.find_category_by_id(int(category_id))
-
-        new_category = site.create_category(name, category)
-
-        site.categories.append(new_category)
-        return '200 OK', render('create_category.html')
-    else:
-        categories = site.categories
-        return '200 OK', render('create_category.html', categories=categories)
+# @application.add_route('/categories/')
+# @debug
+# def categories_view(request):
+#     logger.log('Список категорий')
+#     return '200 OK', render('categories.html', objects_list=site.categories)
+#
+#
+# @application.add_route('/create-category/')
+# @debug
+# def create_category(request):
+#     if request['method'] == 'POST':
+#         data = request['data']
+#         name = data['name']
+#
+#         name = decode_value(name)
+#         category_id = data.get('category_id')
+#
+#         category = None
+#         if category_id:
+#             category = site.find_category_by_id(int(category_id))
+#
+#         new_category = site.create_category(name, category)
+#
+#         site.categories.append(new_category)
+#         return '200 OK', render('create_category.html')
+#     else:
+#         categories = site.categories
+#         return '200 OK', render('create_category.html', categories=categories)
 
 
 @application.add_route('/coachers/')
