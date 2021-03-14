@@ -10,6 +10,11 @@ class Application:
 
         return inner
 
+    def cleanhtml(self, data: str):
+        cleanr = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+        cleantext = re.sub(cleanr, '', data)
+        return cleantext
+
     def parse_input_data(self, data: str):
         result = {}
         if data:
@@ -24,8 +29,8 @@ class Application:
         result = {}
         if data:
             data_str = data.decode(encoding='utf-8')
-            data_str = self.cleanhtml(data_str)
-            result = self.parse_input_data(data_str)
+            data_str_clean = self.cleanhtml(data_str)
+            result = self.parse_input_data(data_str_clean)
         return result
 
     def get_wsgi_input_data(self, env):
@@ -33,11 +38,6 @@ class Application:
         content_length = int(content_length_data) if content_length_data else 0
         data = env['wsgi.input'].read(content_length) if content_length > 0 else b''
         return data
-
-    def cleanhtml(self, data: str):
-        cleanr = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
-        cleantext = re.sub(cleanr, '', data)
-        return cleantext
 
     def __init__(self, urlpatterns, front_controllers):
         """
