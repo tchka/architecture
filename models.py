@@ -137,8 +137,8 @@ class YogaSite:
         return UserFactory.create(type_, name)
 
     @staticmethod
-    def create_category(name, category=None):
-        return Category(name, category)
+    def create_category(name):
+        return Category(name)
 
     def find_category_by_id(self, id):
         for item in self.categories:
