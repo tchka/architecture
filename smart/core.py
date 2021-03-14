@@ -24,6 +24,7 @@ class Application:
         result = {}
         if data:
             data_str = data.decode(encoding='utf-8')
+            data_str = self.cleanhtml(data_str)
             result = self.parse_input_data(data_str)
         return result
 
@@ -52,7 +53,6 @@ class Application:
 
         method = env['REQUEST_METHOD']
         data = self.get_wsgi_input_data(env)
-        data = self.cleanhtml(data)
         data = self.parse_wsgi_input_data(data)
 
         query_string = env['QUERY_STRING']
