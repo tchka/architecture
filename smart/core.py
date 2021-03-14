@@ -34,9 +34,9 @@ class Application:
         data = env['wsgi.input'].read(content_length) if content_length > 0 else b''
         return data
 
-    def cleanhtml(raw_html):
+    def cleanhtml(self, data: str):
         cleanr = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
-        cleantext = re.sub(cleanr, '', raw_html)
+        cleantext = re.sub(cleanr, '', data)
         return cleantext
 
     def __init__(self, urlpatterns, front_controllers):
