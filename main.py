@@ -77,7 +77,7 @@ class CategoryCreateView(CreateView):
     def create_obj(self, data: dict):
         name = data['name']
         name = decode_value(name)
-        new_obj = site.create_category('category', name)
+        new_obj = site.create_category(name)
         site.categories.append(new_obj)
         new_obj.mark_new()
         UnitOfWork.get_current().commit()
